@@ -243,8 +243,33 @@
     </div>
   </section>
 
-  <!-- Results -->
+  <!-- Qualitative -->
   <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Qualitative Comparisons</h2>
+      <p class="note has-text-centered">Zoomed-in crops with PSNR / size per method. RacerGS preserves edges and material details at a fraction of the storage.</p>
+      <div class="swipe-wrap">
+      <button class="swipe-btn swipe-prev" aria-label="Previous scene" onclick="swipeBy(-1)">&#8249;</button>
+      <button class="swipe-btn swipe-next" aria-label="Next scene" onclick="swipeBy(1)">&#8250;</button>
+      <div id="comparison-carousel" class="results-carousel swipe">
+        <div class="item"><img src="static/images/qual_garden.jpg" alt="Garden comparison" loading="lazy">
+          <h2 class="subtitle has-text-centered"><i>garden</i> (Mip-NeRF360): fewer leaf artifacts</h2></div>
+        <div class="item"><img src="static/images/qual_playroom.jpg" alt="Playroom comparison" loading="lazy">
+          <h2 class="subtitle has-text-centered"><i>playroom</i> (DeepBlending): clearer book titles</h2></div>
+        <div class="item"><img src="static/images/qual_train.jpg" alt="Train comparison" loading="lazy">
+          <h2 class="subtitle has-text-centered"><i>train</i> (Tanks&amp;Temples): sharper metal structures</h2></div>
+        <div class="item"><img src="static/images/qual_lego.jpg" alt="Lego comparison" loading="lazy">
+          <h2 class="subtitle has-text-centered"><i>lego</i> (Synthetic-NeRF)</h2></div>
+        <div class="item"><img src="static/images/qual_quebec.jpg" alt="Quebec comparison" loading="lazy">
+          <h2 class="subtitle has-text-centered"><i>quebec</i> (BungeeNeRF)</h2></div>
+      </div>
+      <div class="swipe-dots" id="swipe-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Rate-Distortion Results</h2>
       <div class="figure-frame"><a href="static/images/rd_curves.png" target="_blank"><img class="figure-img" src="static/images/rd_curves.png" alt="Rate-distortion curves on five datasets"></a></div>
@@ -325,31 +350,6 @@
 </div>
 <p class="scroll-hint">Swipe to see all columns &rarr;</p>
       <p class="note has-text-centered">RacerGS outperforms the baselines in size reduction and fidelity preservation across diverse datasets.</p>
-    </div>
-  </section>
-
-  <!-- Qualitative -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Qualitative Comparisons</h2>
-      <p class="note has-text-centered">Zoomed-in crops with PSNR / size per method. RacerGS preserves edges and material details at a fraction of the storage.</p>
-      <div class="swipe-wrap">
-      <button class="swipe-btn swipe-prev" aria-label="Previous scene" onclick="swipeBy(-1)">&#8249;</button>
-      <button class="swipe-btn swipe-next" aria-label="Next scene" onclick="swipeBy(1)">&#8250;</button>
-      <div id="comparison-carousel" class="results-carousel swipe">
-        <div class="item"><img src="static/images/qual_garden.jpg" alt="Garden comparison" loading="lazy">
-          <h2 class="subtitle has-text-centered"><i>garden</i> (Mip-NeRF360): fewer leaf artifacts</h2></div>
-        <div class="item"><img src="static/images/qual_playroom.jpg" alt="Playroom comparison" loading="lazy">
-          <h2 class="subtitle has-text-centered"><i>playroom</i> (DeepBlending): clearer book titles</h2></div>
-        <div class="item"><img src="static/images/qual_train.jpg" alt="Train comparison" loading="lazy">
-          <h2 class="subtitle has-text-centered"><i>train</i> (Tanks&amp;Temples): sharper metal structures</h2></div>
-        <div class="item"><img src="static/images/qual_lego.jpg" alt="Lego comparison" loading="lazy">
-          <h2 class="subtitle has-text-centered"><i>lego</i> (Synthetic-NeRF)</h2></div>
-        <div class="item"><img src="static/images/qual_quebec.jpg" alt="Quebec comparison" loading="lazy">
-          <h2 class="subtitle has-text-centered"><i>quebec</i> (BungeeNeRF)</h2></div>
-      </div>
-      <div class="swipe-dots" id="swipe-dots"></div>
-      </div>
     </div>
   </section>
 
