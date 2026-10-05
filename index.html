@@ -35,60 +35,97 @@
   <script defer src="static/js/index.js"></script>
 
   <style>
-    .stat-row { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin-top:1.5rem; }
-    .stat { flex:1 1 150px; max-width:200px; background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:1rem; text-align:center; }
-    .stat .num { font-size:1.5rem; font-weight:700; color:#1f2937; line-height:1.2; }
-    .stat .lab { font-size:0.9rem; color:#4b5563; margin-top:0.35rem; }
-    .fig-caption { font-size:0.95rem; color:#4b5563; margin-top:0.75rem; text-align:left; }
+    html, body { overflow-x: hidden; }
+    .section { padding: 3rem 1.5rem; }
+    .title.is-3 { margin-bottom: 1.25rem !important; }
+
+    /* header */
+    .publication-title { line-height: 1.2 !important; }
+    .venue-badge { display:inline-block; margin-top:0.5rem; padding:0.15rem 0.75rem; border-radius:999px; background:#1e293b; color:#fff; font-size:0.95rem; font-weight:700; letter-spacing:0.02em; }
+    .publication-links { display:flex; flex-wrap:wrap; justify-content:center; gap:0.6rem; margin-top:1rem; }
+    .publication-links .link-block { margin:0 !important; }
+    .button.coming-soon { cursor:default; opacity:0.8; pointer-events:none; }
+    .news-banner { display:inline-block; margin-top:1rem; padding:0.4rem 1.1rem; border-radius:999px; background:#fff4d6; color:#7a4b00; font-weight:600; font-size:0.98rem; }
+
+    /* figures */
+    .figure-img { width:100%; display:block; border-radius:10px; }
+    .figure-frame { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:0.75rem; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+    .fig-caption { font-size:0.95rem; color:#4b5563; margin-top:0.85rem; text-align:left; line-height:1.55; }
     .note { font-size:0.95rem; color:#4b5563; }
-    .component { background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:1rem 1.1rem; height:100%; }
-    .component h4 { font-weight:700; color:#1f2937; margin-bottom:0.4rem; }
-    .component p { font-size:0.93rem; color:#4b5563; }
-    .result-table { margin:1rem auto 0; font-size:0.95rem; }
+
+    /* stats */
+    .stat-row { display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-top:1.75rem; }
+    .stat { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:1rem 0.75rem; text-align:center; }
+    .stat .num { font-size:1.6rem; font-weight:800; color:#1f2937; line-height:1.2; }
+    .stat .lab { font-size:0.88rem; color:#4b5563; margin-top:0.35rem; line-height:1.35; }
+
+    /* method cards */
+    .component { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:1.1rem 1.2rem; height:100%; }
+    .component h4 { font-weight:700; color:#1f2937; margin-bottom:0.45rem; }
+    .component p { font-size:0.93rem; color:#4b5563; line-height:1.55; }
+
+    /* Table 1 */
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid #e5e7eb; border-radius:10px; background:#fff; margin-top:1rem; }
+    .table-wide { width:min(1200px, calc(100vw - 3rem)); margin-left:50%; transform:translateX(-50%); }
+    .result-table { margin:0 !important; width:100%; }
     .result-table th, .result-table td { text-align:center !important; vertical-align:middle !important; }
-    .result-table td.ours { font-weight:700; }
-    .main-table { font-size:0.78rem; white-space:nowrap; }
-    .main-table th.method { text-align:left !important; font-weight:600; }
-    .main-table tr.ours-row th, .main-table tr.ours-row td { font-weight:700; }
-    .main-table thead th { background:#f2f2f2; }
+    .main-table { font-size:0.8rem; white-space:nowrap; border-collapse:separate; border-spacing:0; }
+    .main-table th, .main-table td { padding:0.32rem 0.5rem !important; border-color:#eef0f3 !important; }
+    .main-table thead th { background:#f3f4f6; color:#1f2937; font-weight:700; }
+    .main-table th.method, .main-table thead tr:first-child th:first-child { position:sticky; left:0; z-index:2; background:#fff; text-align:left !important; font-weight:600; box-shadow:1px 0 0 #e5e7eb; }
+    .main-table thead tr:first-child th:first-child { background:#f3f4f6; }
+    .main-table tr.ours-row th, .main-table tr.ours-row td { font-weight:800; }
+    .main-table tr.ours-row th.method { background:#fff7ed; }
     .best { background:#c9efc9 !important; }
     .second { background:#e5ecfb !important; }
-    .legend-chip { padding:0 0.35em; border-radius:3px; }
-    .button.coming-soon { cursor:default; opacity:0.75; pointer-events:none; }
-    .news-banner { display:inline-block; margin-top:0.9rem; padding:0.35rem 1rem; border-radius:999px; background:#fff4d6; color:#7a4b00; font-weight:600; }
-    .table-wrap { overflow-x:auto; }
+    .legend-chip { padding:0 0.35em; border-radius:4px; }
+    .scroll-hint { display:none; font-size:0.82rem; color:#6b7280; text-align:right; margin-top:0.35rem; }
 
+    /* qualitative carousel */
     .swipe-wrap { position:relative; }
     .results-carousel.swipe { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:0.5rem 0; }
     .results-carousel.swipe::-webkit-scrollbar { display:none; }
     .results-carousel.swipe .item { flex:0 0 100%; box-sizing:border-box; margin:0; scroll-snap-align:center; }
     .results-carousel.swipe .item:hover { transform:none; }
-    .results-carousel.swipe img { width:100%; border-radius:6px; display:block; }
-    .swipe-btn { position:absolute; top:35%; z-index:2; width:2.5rem; height:2.5rem; border-radius:50%; border:none; background:rgba(17,24,39,0.7); color:#fff; font-size:1.6rem; line-height:1; cursor:pointer; }
-    .swipe-prev { left:-1.25rem; } .swipe-next { right:-1.25rem; }
-    .swipe-dots { text-align:center; margin-top:0.5rem; }
-    .swipe-dots span { display:inline-block; width:8px; height:8px; margin:0 4px; border-radius:50%; background:#cbd5e1; cursor:pointer; }
+    .results-carousel.swipe img { width:100%; border-radius:10px; display:block; }
+    .results-carousel .item .subtitle { font-size:1rem !important; margin-top:0.6rem; color:#374151; }
+    .swipe-btn { position:absolute; top:40%; transform:translateY(-50%); z-index:2; width:2.6rem; height:2.6rem; border-radius:50%; border:none; background:rgba(17,24,39,0.65); color:#fff; font-size:1.6rem; line-height:1; cursor:pointer; }
+    .swipe-btn:hover { background:rgba(17,24,39,0.85); }
+    .swipe-prev { left:0.6rem; } .swipe-next { right:0.6rem; }
+    .swipe-dots { text-align:center; margin-top:0.25rem; }
+    .swipe-dots span { display:inline-block; width:9px; height:9px; margin:0 4px; border-radius:50%; background:#cbd5e1; cursor:pointer; }
     .swipe-dots span.on { background:#1f2937; }
+
+    pre#bibtex-code { overflow-x:auto; }
+
+    /* tablets */
+    @media (max-width: 1023px) {
+      .stat-row { grid-template-columns:repeat(2, 1fr); }
+    }
     /* phones */
     @media (max-width: 768px) {
-      .publication-title { font-size: 1.55rem !important; line-height: 1.25 !important; }
-      .publication-authors { font-size: 0.95rem !important; }
+      .section { padding: 2rem 1rem; }
+      .publication-title { font-size: 1.5rem !important; }
+      .publication-authors { font-size: 0.98rem !important; }
+      .venue-badge { font-size:0.85rem; }
       .title.is-3 { font-size: 1.45rem !important; }
       .title.is-4 { font-size: 1.15rem !important; }
-      .hero .subtitle, .teaser .subtitle { font-size: 0.95rem !important; line-height: 1.45; }
-      .results-carousel .subtitle { font-size: 0.9rem !important; }
+      .publication-links { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+      .publication-links .button { width:100%; justify-content:center; font-size:0.85rem; }
+      .news-banner { font-size:0.88rem; border-radius:12px; }
+      .content.has-text-justified, .content.has-text-justified p { text-align:left !important; font-size:0.95rem !important; }
+      .fig-caption, .note { font-size:0.88rem; }
+      .figure-frame { padding:0.4rem; }
+      .stat { padding:0.75rem 0.5rem; }
+      .stat .num { font-size:1.3rem; }
+      .stat .lab { font-size:0.78rem; }
+      .component { padding:0.9rem 1rem; }
+      .table-wide { width:auto; margin-left:0; transform:none; }
+      .main-table { font-size:0.72rem; }
+      .scroll-hint { display:block; }
       .swipe-btn { display:none; }
-      .content.has-text-justified, .content.has-text-justified p { text-align: left !important; font-size: 0.95rem !important; }
-      .fig-caption, .note { font-size: 0.88rem; }
-      .stat .num { font-size: 1.25rem; }
-      .stat .lab { font-size: 0.8rem; }
-      .stat { padding: 0.75rem 0.5rem; }
-      .result-table { font-size: 0.8rem; }
-      .publication-links { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
-      .publication-links .link-block { display: block; margin: 0 !important; }
-      .publication-links .button { width: 100%; margin: 0 !important; justify-content: center; }
-      .section { padding: 2rem 1rem; }
-      pre#bibtex-code { font-size: 0.7rem; }
+      .results-carousel .item .subtitle { font-size:0.9rem !important; }
+      pre#bibtex-code { font-size:0.7rem; }
     }
   </style>
 </head>
@@ -107,15 +144,13 @@
             <h1 class="title is-1 publication-title">RacerGS: Residual-Autoregressive Context for 3D Gaussian Splatting Compression</h1>
             <div class="is-size-5 publication-authors">
               <span class="author-block"><a href="https://wenqing-wang.netlify.app/" target="_blank">Wenqing Wang</a>,</span>
-              <span class="author-block">Huimin Zeng,</span>
+              <span class="author-block"><a href="https://huimin-zeng.github.io/" target="_blank">Huimin Zeng</a>,</span>
               <span class="author-block"><a href="https://www1.ece.neu.edu/~yunfu/" target="_blank">Yun Fu</a></span>
             </div>
             <div class="is-size-5 publication-authors">
               <span class="author-block">Northeastern University</span>
             </div>
-            <div class="is-size-5 publication-authors" style="margin-top:0.25rem">
-              <span class="author-block"><b>NeurIPS 2026</b></span>
-            </div>
+            <span class="venue-badge">NeurIPS 2026</span>
 
             <div class="column has-text-centered">
               <div class="publication-links">
@@ -144,10 +179,10 @@
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="hero-body">
-        <a href="static/images/teaser.png" target="_blank"><img src="static/images/teaser.png" alt="RacerGS teaser: bits per anchor of a prior method and RacerGS" style="width:100%"></a>
-        <h2 class="subtitle has-text-centered">
+        <div class="figure-frame"><a href="static/images/teaser.png" target="_blank"><img class="figure-img" src="static/images/teaser.png" alt="RacerGS teaser: bits per anchor of a prior method and RacerGS"></a></div>
+        <p class="fig-caption">
           Previous methods have limited spatial context, inefficient entropy modeling, and no causal dependencies across anchor feature groups, which leads to high coding costs. <b>RacerGS</b> addresses these limitations through compact context projection, residual coding, and autoregressive GRU refinement, shifting the bitrate distribution toward fewer bits per anchor (bottom) while preserving rendering fidelity.
-        </h2>
+        </p>
       </div>
     </div>
   </section>
@@ -181,7 +216,7 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Method</h2>
-      <a href="static/images/pipeline.png" target="_blank"><img src="static/images/pipeline.png" alt="RacerGS pipeline overview (tap to enlarge)" style="width:100%"></a>
+      <div class="figure-frame"><a href="static/images/pipeline.png" target="_blank"><img class="figure-img" src="static/images/pipeline.png" alt="RacerGS pipeline overview (tap to enlarge)"></a></div>
       <p class="fig-caption">
         RacerGS builds on an anchor-based 3DGS codec and compresses each anchor's feature <i>f<sup>a</sup></i>, scaling <i>l</i>, and offsets <i>o</i> with three components. The refined entropy parameters are combined with the spatial prior to form a Gaussian mixture model for residual entropy coding.
       </p>
@@ -212,14 +247,14 @@
   <section class="section hero is-light">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Rate-Distortion Results</h2>
-      <a href="static/images/rd_curves.png" target="_blank"><img src="static/images/rd_curves.png" alt="Rate-distortion curves on five datasets" style="width:100%"></a>
+      <div class="figure-frame"><a href="static/images/rd_curves.png" target="_blank"><img class="figure-img" src="static/images/rd_curves.png" alt="Rate-distortion curves on five datasets"></a></div>
       <p class="fig-caption">
         <b>RD curves</b> on Synthetic-NeRF, Mip-NeRF360, Tanks&amp;Temples, DeepBlending, and BungeeNeRF. RacerGS reaches a better rate-distortion trade-off than codebook, pruning, entropy, and anchor-based baselines across datasets.
       </p>
 
       <h3 class="title is-4 has-text-centered" style="margin-top:2rem">Quantitative Comparisons</h3>
       <p class="note has-text-centered">Storage sizes in MB. The best and second-best compression results are highlighted in <span class="best legend-chip">green</span> and <span class="second legend-chip">blue</span>; lr / hr denote the low- and high-rate settings.</p>
-<div class="table-wrap">
+<div class="table-wrap table-wide">
 <table class="table result-table main-table">
 <thead>
 <tr><th rowspan="2">Method</th><th colspan="4">Synthetic-NeRF</th><th colspan="4">Mip-NeRF360</th><th colspan="4">Tanks&amp;Temples</th></tr>
@@ -253,7 +288,8 @@
 </tbody>
 </table>
 </div>
-<div class="table-wrap">
+<p class="scroll-hint">Swipe to see all columns &rarr;</p>
+<div class="table-wrap table-wide">
 <table class="table result-table main-table">
 <thead>
 <tr><th rowspan="2">Method</th><th colspan="4">DeepBlending</th><th colspan="4">BungeeNeRF</th></tr>
@@ -287,6 +323,7 @@
 </tbody>
 </table>
 </div>
+<p class="scroll-hint">Swipe to see all columns &rarr;</p>
       <p class="note has-text-centered">RacerGS outperforms the baselines in size reduction and fidelity preservation across diverse datasets.</p>
     </div>
   </section>
